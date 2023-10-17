@@ -5,11 +5,19 @@ import {
     TextField,
     ReferenceField,
     EditButton,
+    Create,
     Edit,
     SimpleForm,
     ReferenceInput,
     TextInput,
+    useRecordContext,
 } from "react-admin";
+
+const PostTitle = () => {
+      const record = useRecordContext();
+      return <span>Post {record ? `"${record.title}"` : ''}</span>;
+    };
+
 export const PostList = () => (
     <List>
    <Datagrid>
@@ -22,7 +30,7 @@ export const PostList = () => (
 );
 
 export const PostEdit = () => (
-    <Edit>
+    <Edit title={<PostTitle />}>
         <SimpleForm>
             <TextInput source="id" disabled />
             <TextInput source="title" />
@@ -30,3 +38,13 @@ export const PostEdit = () => (
         </SimpleForm>
     </Edit>
 );
+
+export const PostCreate = () => (
+      <Create>
+        <SimpleForm>
+          <ReferenceInput source="userId" reference="users" />
+          <TextInput source="title" />
+          <TextInput source="body" multiline rows={5} />
+        </SimpleForm>
+      </Create>
+    );
